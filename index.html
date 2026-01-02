@@ -175,9 +175,32 @@
     draw();
   }
 
+  // Touchsteuerung hinzufügen
+  let touchStartX = 0;
+
+  function touchStart(e) {
+    touchStartX = e.touches[0].clientX; // Erster Touchpunkt
+  }
+
+  function touchMove(e) {
+    if (!gameRunning) return;
+    const touchMoveX = e.touches[0].clientX;
+    const touchDiff = touchMoveX - touchStartX;
+
+    // Paddle-Bewegung
+    paddle.x += touchDiff * 0.1;  // Geschwindigkeit der Bewegung anpassen
+    if (paddle.x < 0) paddle.x = 0;
+    if (paddle.x + paddle.width > canvas.width)
+      paddle.x = canvas.width - paddle.width;
+
+    touchStartX = touchMoveX;  // Setze den neuen Startpunkt für den nächsten Touch
+  }
+
   playButton.addEventListener("click", startGame);
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
+  canvas.addEventListener("touchstart", touchStart);
+  canvas.addEventListener("touchmove", touchMove);
 
   showMenu();
 </script>
