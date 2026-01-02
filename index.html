@@ -11,6 +11,7 @@
       text-align: center;
       margin: 0;
       padding: 0;
+      overflow: hidden; /* Verhindert das Scrollen der Seite */
     }
 
     canvas {
@@ -179,7 +180,8 @@
   let touchStartX = 0;
 
   function touchStart(e) {
-    touchStartX = e.touches[0].clientX; // Erster Touchpunkt
+    touchStartX = e.touches[0].clientX;
+    e.preventDefault(); // Verhindert das Scrollen
   }
 
   function touchMove(e) {
@@ -187,13 +189,14 @@
     const touchMoveX = e.touches[0].clientX;
     const touchDiff = touchMoveX - touchStartX;
 
-    // Paddle-Bewegung
-    paddle.x += touchDiff * 0.5;  // Geschwindigkeit der Bewegung anpassen
+    // Paddle-Bewegung mit erhöhter Geschwindigkeit
+    paddle.x += touchDiff * 0.5;  // Geschwindigkeit der Bewegung auf 0.5 erhöht
     if (paddle.x < 0) paddle.x = 0;
     if (paddle.x + paddle.width > canvas.width)
       paddle.x = canvas.width - paddle.width;
 
     touchStartX = touchMoveX;  // Setze den neuen Startpunkt für den nächsten Touch
+    e.preventDefault(); // Verhindert das Scrollen
   }
 
   playButton.addEventListener("click", startGame);
