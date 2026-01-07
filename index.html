@@ -190,7 +190,7 @@
     const touchDiff = touchMoveX - touchStartX;
 
     // Paddle-Bewegung mit erhöhter Geschwindigkeit
-    paddle.x += touchDiff * 0.5;  // Geschwindigkeit der Bewegung auf 0.5 erhöht
+    paddle.x += touchDiff * 1.0;  // Geschwindigkeit der Bewegung auf 0.5 erhöht
     if (paddle.x < 0) paddle.x = 0;
     if (paddle.x + paddle.width > canvas.width)
       paddle.x = canvas.width - paddle.width;
